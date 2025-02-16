@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { ResizeMode, Video } from 'expo-av';
-import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     View,
@@ -27,11 +27,11 @@ const Create = () => {
     });
 
     const openPicker = async selectType => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: selectType === 'image' ? 'images' : 'videos',
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
+        const result = await DocumentPicker.getDocumentAsync({
+            type:
+                selectType === 'image'
+                    ? ['image/png', 'image/jpg', 'image/jpeg']
+                    : ['video/mp4', 'video/gif'],
         });
 
         if (!result.canceled) {
@@ -48,6 +48,10 @@ const Create = () => {
                     video: result.assets[0],
                 });
             }
+        } else {
+            setTimeout(() => {
+                Alert.alert('Document picked', JSON.stringify(result, null, 2));
+            }, 100);
         }
     };
 
@@ -109,7 +113,9 @@ const Create = () => {
                             <Video
                                 source={{ uri: form.video.uri }}
                                 className="w-full h-64 rounded-2xl"
+                                useNativeControls
                                 resizeMode={ResizeMode.COVER}
+                                isLooping
                             />
                         ) : (
                             <View className="w-full h-40 px-4 bg-black-100 rounded-2xl border border-black-200 flex justify-center items-center">
