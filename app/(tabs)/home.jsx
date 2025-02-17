@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, Image, RefreshControl, Text, View } from 'react-native';
 import { images } from '../../constants';
@@ -26,11 +26,13 @@ const Home = () => {
                 keyExtractor={item => item.$id}
                 renderItem={({ item }) => (
                     <VideoCard
+                        videoId={item.$id}
                         title={item.title}
                         thumbnail={item.thumbnail}
                         video={item.video}
                         creator={item.creator?.username ?? 'Unknown'}
                         avatar={item.creator?.avatar ?? images.defaultAvatar}
+                        likedUsers={item.liked}
                     />
                 )}
                 ListHeaderComponent={() => (
@@ -54,7 +56,7 @@ const Home = () => {
                             </View>
                         </View>
 
-                        <SearchInput />
+                        <SearchInput placeholder={'Search for a video topic'} />
 
                         <View className="w-full flex-1 pt-5 pb-8">
                             <Text className="text-lg font-pregular text-gray-100 mb-3">

@@ -1,10 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ResizeMode, Video } from 'expo-av';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { icons } from '../constants';
+import { toggleLikeVideo, getCurrentUser } from '../lib/appwrite';
 
-const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+const VideoCard = ({
+    videoId,
+    title,
+    creator,
+    avatar,
+    thumbnail,
+    video,
+    likedUsers,
+}) => {
     const [play, setPlay] = useState(false);
+    const [bookmarked, setBookmarked] = useState(false);
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        async function fetchUser() {
+            const user = await getCurrentUser();
+            if (user) {
+                setUserId(user.accountId);
+                setBookmarked(likedUsers?.includes(user.accountId));
+            }
+        }
+        fetchUser();
+    }, [likedUsers]);
+
+    const handleLike = async () => {
+        if (!userId) return;
+
+        await toggleLikeVideo(userId, videoId);
+        setBookmarked(!bookmarked);
+    };
 
     return (
         <View className="flex flex-col items-center px-4 mb-14">
@@ -35,11 +64,17 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
                 </View>
 
                 <View className="pt-2">
-                    <Image
-                        source={icons.menu}
-                        className="w-5 h-5"
-                        resizeMode="contain"
-                    />
+                    <TouchableOpacity onPress={handleLike}>
+                        <Image
+                            source={
+                                bookmarked
+                                    ? icons.bookmarksecondary
+                                    : icons.bookmarkwhite
+                            }
+                            className="w-5 h-5"
+                            resizeMode="contain"
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
 

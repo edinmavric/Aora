@@ -21,11 +21,13 @@ const Search = () => {
                 keyExtractor={item => item.$id}
                 renderItem={({ item }) => (
                     <VideoCard
+                        videoId={item.$id}
                         title={item.title}
                         thumbnail={item.thumbnail}
                         video={item.video}
                         creator={item.creator?.username ?? 'Unknown'}
                         avatar={item.creator?.avatar ?? images.defaultAvatar}
+                        likedUsers={item.liked}
                     />
                 )}
                 ListHeaderComponent={() => (
@@ -40,6 +42,7 @@ const Search = () => {
 
                             <View className="mt-6 mb-8">
                                 <SearchInput
+                                    placeholder={'Search for a video topic'}
                                     initialQuery={query}
                                     refetch={refetch}
                                 />

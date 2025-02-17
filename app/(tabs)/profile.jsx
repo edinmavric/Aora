@@ -26,11 +26,13 @@ const Profile = () => {
                 keyExtractor={item => item.$id}
                 renderItem={({ item }) => (
                     <VideoCard
+                        videoId={item.$id}
                         title={item.title}
                         thumbnail={item.thumbnail}
                         video={item.video}
                         creator={item.creator?.username ?? 'Unknown'}
                         avatar={item.creator?.avatar ?? images.defaultAvatar}
+                        likedUsers={item.liked}
                     />
                 )}
                 ListEmptyComponent={() => (

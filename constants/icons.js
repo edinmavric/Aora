@@ -12,6 +12,8 @@ import logout from '../assets/icons/logout.png';
 import eyeHide from '../assets/icons/eye-hide.png';
 import eye from '../assets/icons/eye.png';
 import play from '../assets/icons/play.png';
+import bookmarkwhite from '../assets/icons/bookmark-white.png';
+import bookmarksecondary from '../assets/icons/bookmark-secondary.png';
 
 export default {
     play,
@@ -27,4 +29,6 @@ export default {
     logout,
     eyeHide,
     eye,
+    bookmarkwhite,
+    bookmarksecondary,
 };
