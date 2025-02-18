@@ -64,7 +64,7 @@ const VideoCard = ({
                 </View>
 
                 <View className="pt-2">
-                    <TouchableOpacity onPress={handleLike}>
+                    <TouchableOpacity onPressIn={handleLike}>
                         <Image
                             source={
                                 bookmarked

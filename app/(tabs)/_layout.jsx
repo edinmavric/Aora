@@ -12,7 +12,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
                 source={icon}
                 resizeMode="contain"
                 tintColor={color}
-                className="w-6 h-6"
+                className="w-6 h-6 aspect-square"
             />
             <Text
                 className={`${
@@ -33,6 +33,7 @@ const TabLayout = () => {
 
     return (
         <>
+            <View className="absolute bottom-[115px] left-0 w-full h-[2px] bg-black/30 shadow-lg shadow-black/40 z-10" />
             <Tabs
                 screenOptions={{
                     tabBarActiveTintColor: '#FFA001',
@@ -40,9 +41,10 @@ const TabLayout = () => {
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         backgroundColor: '#161622',
-                        borderTopWidth: 1,
-                        borderTopColor: '#232533',
+                        borderTopWidth: 0,
                         height: 84,
+                        elevation: 0,
+                        shadowOpacity: 0,
                     },
                 }}
             >
